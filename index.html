@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Proyectico RECORDANDO-Tienda Fotográfica</title>
+    <link rel="stylesheet" href="./css/estilos.css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  </head>
+  <body>
+    <h1>Registro de Promoción</h1>
+
+    <form id="registroForm">
+      <div>
+        <label for="codigo">Código del Cliente:</label>
+        <input type="text" id="codigo" required />
+      </div>
+      <div>
+        <label for="costoBase">Costo Base:</label>
+        <input type="number" id="costoBase" required />
+      </div>
+      <div>
+        <label for="tipoPromocion">Tipo de Promoción:</label>
+        <select id="tipoPromocion" required>
+          <option value="">Seleccionar</option>
+          <option value="fotografia">Fotografía</option>
+          <option value="video">Video</option>
+        </select>
+      </div>
+
+      <div id="fotografiaCampos" style="display: none">
+        <h2>Detalles de Fotografía</h2>
+        <div>
+          <label for="tipoFoto">Tipo de Foto:</label>
+          <select id="tipoFoto">
+            <option value="D">Digital</option>
+            <option value="I">Impresa</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="videoCampos" style="display: none">
+        <h2>Detalles de Video</h2>
+        <div>
+          <label for="formatoHD">Formato HD:</label>
+          <select id="formatoHD">
+            <option value="SI">Sí</option>
+            <option value="NO">No</option>
+          </select>
+        </div>
+      </div>
+
+      <button type="button" onclick="registrarPromocion()">Registrar Promoción</button>
+    </form>
+
+    <h2>Resultados</h2>
+    <div id="resultados"></div>
+
+    <script type="module" src="./js/Principal.js"></script>
+    <script>
+      document
+        .getElementById("tipoPromocion")
+        .addEventListener("change", function () {
+          const fotografiaCampos = document.getElementById("fotografiaCampos");
+          const videoCampos = document.getElementById("videoCampos");
+          if (this.value === "fotografia") {
+            fotografiaCampos.style.display = "block";
+            videoCampos.style.display = "none";
+          } else if (this.value === "video") {
+            fotografiaCampos.style.display = "none";
+            videoCampos.style.display = "block";
+          } else {
+            fotografiaCampos.style.display = "none";
+            videoCampos.style.display = "none";
+          }
+        });
+
+      function registrarPromocion() {
+        import("./js/Principal.js").then((module) => {
+            console.log(module);
+        if (typeof module.registrarPromocionDesdeHTML === 'function') {
+            module.registrarPromocionDesdeHTML();
+        } else {
+            console.error("La función registrarPromocionDesdeHTML no fue exportada correctamente del módulo.");
+        }
+    }).catch(error => {
+        console.error("Error al importar el módulo principal:", error);
+    });
+}
+    </script>
+  </body>
+</html>
